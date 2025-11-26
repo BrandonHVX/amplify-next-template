@@ -1,23 +1,26 @@
 "use client";
 
 
+import { Categories } from '@/app/components/categories';
+import { LatestPosts } from '@/app/components/latest-posts';
+import { getCategories, getAllPosts } from '@/app/lib/queries';
+import Link from 'next/link';
 
-export default function App() {
-
-
-
+export default async function Home() {
+  const categories = await getCategories();
+  const { posts } = await getAllPosts();
 
   return (
-    <main>
-      <h1>My todos</h1>
-     
-      <div>
-        🥳 App successfully hosted. Try creating a new todo.
-        <br />
-        <a href="https://docs.amplify.aws/nextjs/start/quickstart/nextjs-app-router-client-components/">
-          Review next steps of this tutorial.
-        </a>
+    <section>
+ 
+      <Categories categories={categories} />
+      <LatestPosts posts={posts} />
+      <div className='text-center'>
+        <Link href={`/blog`} className='hover:underline text-gray-900 py-5 block rounded-md'>
+          View More Posts
+        </Link>
       </div>
-    </main>
+    </section>
   );
 }
+
